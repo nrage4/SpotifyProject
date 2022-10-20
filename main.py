@@ -1,4 +1,5 @@
 import sqlite3  # import sqlite
+import pandas as pd
 conn = sqlite3.connect('spotify_artist_data')  # connecting our dataset to python
 print("Opened database successfully")  # print this when database is opened successfully
 
@@ -41,4 +42,10 @@ for row in cursor:
     print("STREAMS", row[5], "\n")
 
 print("Operation done successfully")
+
+pd.set_option("display.max_rows", 100)
+pd.set_option("display.max_columns", 100)
+spotify = pd.read_csv("C:/Users/NasraRage/Documents/archive/spotify_artist_data.csv")
+group_spotify = spotify[['Artist Name', 'Lead Streams']].groupby(['Artist Name']).sum()
+print(group_spotify)
 conn.close()
